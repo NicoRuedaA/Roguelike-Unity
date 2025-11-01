@@ -4,45 +4,49 @@ using UnityEngine;
 
 namespace nicorueda.Player
 {
-    public class PlayerManager : nicorueda.CharacterController
+    public class PlayerManager : nicorueda.CharacterBase
     {
         //SINGLETON DECLARATION
         private static PlayerManager _instance;
-        public static PlayerManager instance{
-            get{
-                if(_instance == null){
+        public static PlayerManager instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
                     print("Player Manager is Null!!!");
                 }
                 return _instance;
             }
         }
-        
- 
-
-    
-        
-    
-        protected int attDistCost= 25, attMeleeCost=25, runCost = 10;
-        public int RunCost { get => runCost; }  public int AttDisCost {get => attDistCost;} public int AttMeleeCost { get => attMeleeCost; }
-
-    //STATE VARIABLES
-    protected static bool walking, running, pointing, idle;
-
-    private void Awake()
-    {
-                    _instance = this;
-    }
 
 
-    private void Start()
+
+
+
+
+        protected int attDistCost = 25, attMeleeCost = 25, runCost = 10;
+        public int RunCost { get => runCost; }
+        public int AttDisCost { get => attDistCost; }
+        public int AttMeleeCost { get => attMeleeCost; }
+
+        //STATE VARIABLES
+        protected static bool walking, running, pointing, idle;
+
+        private void Awake()
+        {
+            _instance = this;
+        }
+
+
+        private void Start()
         {
 
 
-            vulnerable = true;
-            PrepareCharacter();
+            isVulnerable = true;
         }
 
-        
+
         /* public TMP_Text counterText;
  private void FixedUpdate()
  {
@@ -64,7 +68,7 @@ counterText.text = "HP: " + health + Environment.NewLine +
         {
             print("murió");
         }
-    
+
         /*public void GodMode()
         {
             health = 9999;

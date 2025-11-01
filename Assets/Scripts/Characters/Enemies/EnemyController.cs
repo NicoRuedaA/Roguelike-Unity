@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using nicorueda.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
-using CharacterController = nicorueda.CharacterController;
-using Random=UnityEngine.Random;
+using CharacterController = nicorueda.CharacterBase;
+using Random = UnityEngine.Random;
 
 public class EnemyController : CharacterController
 {
@@ -31,6 +31,8 @@ public class EnemyController : CharacterController
     Vector3 direction;
 
 
+
+
     //VARIABLES DISPARAR Y PLACAR
     private float timeBtwShoots, chargeRate = 3f, nextChargeTime;
     [SerializeField] private GameObject[] projectile;
@@ -43,7 +45,7 @@ public class EnemyController : CharacterController
     private int randomSpot;
     [SerializeField] bool canTeleport;
     [SerializeField] Transform[] moveSpots;
-    [FormerlySerializedAs("startWaitTime")] [SerializeField] private float initialMoveWaitTime;
+    [FormerlySerializedAs("startWaitTime")][SerializeField] private float initialMoveWaitTime;
     float waitTime;
 
     Rigidbody2D m_Rb;
@@ -55,10 +57,10 @@ public class EnemyController : CharacterController
     private float timeInArea;
     [SerializeField] float timeToattack = 4f;
     [SerializeField] private int maxBullet = 2;
-    
+
     [SerializeField] bool canBlock;
 
-    
+
 
     private void Awake()
     {
@@ -71,7 +73,6 @@ public class EnemyController : CharacterController
         //Physics2D.IgnoreCollision(m_player.gameObject.GetComponent<CircleCollider2D>(), GetComponent<BoxCollider2D>());
         //Physics2D.IgnoreCollision(m_player.gameObject.GetComponent<CircleCollider2D>(), GetComponent<BoxCollider2D>());
 
-        PrepareCharacter();
     }
 
     private void Start()
@@ -89,7 +90,7 @@ public class EnemyController : CharacterController
         timeInArea = 0f;
 
         LevelManager.instance.AddEnemy();
-    
+
 
     }
 
@@ -101,20 +102,20 @@ public class EnemyController : CharacterController
             case (EnemyType.pathfinding):
                 if (canTeleport)
                 {
-                    
+
                     transform.position = moveSpots[randomSpot].position;
                 }
                 else
                 {
                     transform.position = Vector2.MoveTowards(transform.position, moveSpots[randomSpot].position,
-                        speed * Time.deltaTime);
-                   
+                        Speed * Time.deltaTime);
+
 
                 }
 
                 if (Vector2.Distance(transform.position, moveSpots[randomSpot].position) < 0.2f)
                 {
-                    if(timeBtwShoots >= 3) m_Animator.Play("Idle");
+                    if (timeBtwShoots >= 3) m_Animator.Play("Idle");
                     if (waitTime <= 0)
                     {
                         randomSpot = Random.Range(0, moveSpots.Length);
@@ -125,7 +126,7 @@ public class EnemyController : CharacterController
                         waitTime -= Time.deltaTime;
                     }
                 }
-                
+
                 break;
 
             case (EnemyType.followPlayer):
@@ -141,23 +142,23 @@ public class EnemyController : CharacterController
                     {
 
                         transform.position = Vector2.MoveTowards(transform.position, m_player.position,
-                            speed / 2 * Time.deltaTime);
- }
-                   
+                            Speed / 2 * Time.deltaTime);
+                    }
+
                     else if (Vector2.Distance(transform.position, m_player.position) < retreadDistance)
                     {
                         transform.position =
-                            Vector2.MoveTowards(transform.position, m_player.position, -speed * Time.deltaTime);
- }
+                            Vector2.MoveTowards(transform.position, m_player.position, -Speed * Time.deltaTime);
+                    }
                 }
 
 
                 else
                 {
-    
-                 if (Vector2.Distance(transform.position, toTackle) < 0.1f) m_Animator.Play("Resting");
+
+                    if (Vector2.Distance(transform.position, toTackle) < 0.1f) m_Animator.Play("Resting");
                     transform.position = Vector2.MoveTowards(transform.position, toTackle,
-                        speed * 2 * Time.deltaTime);
+                        Speed * 2 * Time.deltaTime);
 
                 }
 
@@ -165,12 +166,14 @@ public class EnemyController : CharacterController
         }
 
 
-        if(canBlock){
-            if (Vector2.Distance(transform.position, m_player.transform.position) < 2f){
+        if (canBlock)
+        {
+            if (Vector2.Distance(transform.position, m_player.transform.position) < 2f)
+            {
 
             }
-            else m_Animator.Play("Block"); 
-}
+            else m_Animator.Play("Block");
+        }
 
         if (canShoot)
         {
@@ -215,13 +218,13 @@ public class EnemyController : CharacterController
         if (other.CompareTag("Player") && charging)
         {
 
-            PlayerManager.instance.ReduceHealth(this.transform.position);
+            PlayerManager.instance.TakeDamage(1, this.transform.position);
             RebootCharge();
         }
 
         if (other.CompareTag("Player") && canAttack)
         {
-            m_Animator.Play("Idle"); 
+            m_Animator.Play("Idle");
             playerInArea = true;
             timeInArea = 0f;
         }
@@ -232,7 +235,7 @@ public class EnemyController : CharacterController
     {
         if (other.CompareTag("Player") && canAttack)
         {
-            m_Animator.Play("Block"); 
+            m_Animator.Play("Block");
             playerInArea = false;
             timeInArea = 0f;
         }
@@ -243,15 +246,15 @@ public class EnemyController : CharacterController
 
     public void Stunned(int stunningTime)
     {
-        int speedAux = this.speed;
-        this.speed = 0;
+        int speedAux = this.Speed;
+        this.SetSpeed(0);
         StartCoroutine(this.StunTimer(stunningTime, speedAux));
     }
 
     private IEnumerator StunTimer(int stunningTime, int speedAux)
     {
         yield return new WaitForSecondsRealtime(stunningTime);
-        this.speed = speedAux;
+        SetSpeed(speedAux);
     }
 
 
@@ -269,51 +272,54 @@ public class EnemyController : CharacterController
 
     void Instanciar(int x)
     {
-        var newProjectile =  Instantiate(projectile[x], transform.position, Quaternion.identity, transform);
+        var newProjectile = Instantiate(projectile[x], transform.position, Quaternion.identity, transform);
         newProjectile.transform.parent = gameObject.transform.parent;
-        
+
     }
 
     void Charge()
     {
-        if(!charging){
+        if (!charging)
+        {
 
-        canCharge = false;
-        toTackle = new Vector2(m_player.transform.position.x, m_player.transform.position.y);
-        stoppingDistance = 1;
-        retreadDistance = 1;
-        charging = true;
-   
-        
-        StartCoroutine(ExecuteAfterTime(5f));
+            canCharge = false;
+            toTackle = new Vector2(m_player.transform.position.x, m_player.transform.position.y);
+            stoppingDistance = 1;
+            retreadDistance = 1;
+            charging = true;
+
+
+            StartCoroutine(ExecuteAfterTime(5f));
         }
 
     }
 
-     IEnumerator ExecuteAfterTime(float time)
+    IEnumerator ExecuteAfterTime(float time)
     {
-         yield return new WaitForSeconds(time);
- 
+        yield return new WaitForSeconds(time);
 
-        if(charging){
+
+        if (charging)
+        {
             RebootCharge();
         }
 
 
     }
 
-    void RebootCharge(){
-            m_Animator.Play("Idle");
-                stoppingDistance = initialStoppingDistance;
+    void RebootCharge()
+    {
+        m_Animator.Play("Idle");
+        stoppingDistance = initialStoppingDistance;
         retreadDistance = initialRetreadDistance;
         nextChargeTime = Time.time + chargeRate;
         charging = false;
         canCharge = true;
     }
-    
+
     protected override void Die()
     {
-        
+
     }
-    
+
 }

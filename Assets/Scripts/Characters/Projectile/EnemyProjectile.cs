@@ -41,7 +41,7 @@ public class EnemyProjectile : MonoBehaviour
 
         m_Player = GameObject.FindGameObjectWithTag("Player").transform;
         target = new Vector2(m_Player.position.x, m_Player.position.y);
-        toShot = new Vector2(m_Player.position.x-transform.position.x, m_Player.position.y-transform.position.y);
+        toShot = new Vector2(m_Player.position.x - transform.position.x, m_Player.position.y - transform.position.y);
 
 
 
@@ -55,7 +55,7 @@ public class EnemyProjectile : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + offset));
 
         m_Rb = GetComponent<Rigidbody2D>();
-        
+
         toShot = new Vector2(m_Player.transform.position.x, m_Player.transform.position.y);
 
         //toShot.Normalize();
@@ -64,7 +64,7 @@ public class EnemyProjectile : MonoBehaviour
     }
 
     public int frameInterval = 60;
-    
+
     private void FixedUpdate()
     {
 
@@ -72,42 +72,46 @@ public class EnemyProjectile : MonoBehaviour
         //if (Time.frameCount % frameInterval == 0) Debug.Log(target);
 
 
-        if (!exploited) {
+        if (!exploited)
+        {
 
-                
-                //target.Normalize();
-                
-                //Vector2 direction = new Vector2(m_Player.transform.position.x - m_Player.transform.position.y)
-                //target *= maxDistance;
-                //Vector2 newTarget = target * maxDistance;
-                //m_Rb.AddForce(direction, ForceMode2D.Impulse);
-                transform.position = Vector2.MoveTowards(transform.position, toShot,
-                    speed* Time.deltaTime);
-                
-                if(Vector3.Distance(transform.position, toShot) < 0.1f){
-                    if(!isExplosive) Destroy(gameObject);
-                    else
-                    {
-                        m_Animator.Play("Explosion");
-                        StartCoroutine(DestrooyPro());
-                    }
+
+            //target.Normalize();
+
+            //Vector2 direction = new Vector2(m_Player.transform.position.x - m_Player.transform.position.y)
+            //target *= maxDistance;
+            //Vector2 newTarget = target * maxDistance;
+            //m_Rb.AddForce(direction, ForceMode2D.Impulse);
+            transform.position = Vector2.MoveTowards(transform.position, toShot,
+                speed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, toShot) < 0.1f)
+            {
+                if (!isExplosive) Destroy(gameObject);
+                else
+                {
+                    m_Animator.Play("Explosion");
+                    StartCoroutine(DestrooyPro());
                 }
-                
-                //transform.position = Vector2.MoveTowards(transform.position, target.Normalize()o, speed * Time.deltaTime);
- 
+            }
+
+            //transform.position = Vector2.MoveTowards(transform.position, target.Normalize()o, speed * Time.deltaTime);
+
         }
-            
+
         else DetectCollision();
-                    
+
     }
 
-    
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Sword") || other.CompareTag("Enemy") || (other.CompareTag("EnemyProjectile"))){ }
-        else  {
-            if (other.CompareTag("Player")){
+        if (other.CompareTag("Sword") || other.CompareTag("Enemy") || (other.CompareTag("EnemyProjectile"))) { }
+        else
+        {
+            if (other.CompareTag("Player"))
+            {
                 MakeDMG();
             }
             DestroyProjectile();
@@ -120,11 +124,12 @@ public class EnemyProjectile : MonoBehaviour
 
 
 
-    
+
     //sustituir por evento al detectar que se acaba la animacion
-    IEnumerator DestrooyPro(){
-    yield return new WaitForSeconds(1.5f);
-     DestroyProjectile();
+    IEnumerator DestrooyPro()
+    {
+        yield return new WaitForSeconds(1.5f);
+        DestroyProjectile();
     }
 
 
@@ -132,46 +137,51 @@ public class EnemyProjectile : MonoBehaviour
 
 
 
-    void DetectCollision(){
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(this.transform.position, 
+    void DetectCollision()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(this.transform.position,
         explosionRange);
 
-                //***** DAÑAR A ENEMIGOS *****
-                foreach (Collider2D enemies in hitEnemies){
-                    if(enemies.CompareTag("Player")){
-                       MakeDMG();
+        //***** DAÑAR A ENEMIGOS *****
+        foreach (Collider2D enemies in hitEnemies)
+        {
+            if (enemies.CompareTag("Player"))
+            {
+                MakeDMG();
 
-                        /*enemies.GetComponent<EnemyController>().ReduceHealth();
-                    }
-                    else if(enemies.CompareTag("EnemyProjectile")){
-                        Destroy(enemies.gameObject);*/
-                    }
+                /*enemies.GetComponent<EnemyController>().ReduceHealth();
+            }
+            else if(enemies.CompareTag("EnemyProjectile")){
+                Destroy(enemies.gameObject);*/
+            }
         }
     }
 
 
     void MakeDMG()
     {
- PlayerManager.instance.ReduceHealth(this.transform.position);
+        PlayerManager.instance.TakeDamage(1, this.transform.position);
 
         if (isExplosive)
         {
             m_Animator.Play("Explosion");
             this.GetComponent<Collider2D>().enabled = false;
-            exploited = true; 
+            exploited = true;
             //staticCEnemy,cEnemy,PlayAnim,amm)_Animator.Play**("Resting"();: "iftotTackle< 0.1f  boobl l lcanBlock; [[serialzied\[sSerialiizeField]if (canBlock){StartCoroutine(DestrooyPro());
         }
-        
+
         else DestroyProjectile();
     }
 
-    
-    void DestroyProjectile(){
+
+    void DestroyProjectile()
+    {
         Destroy(gameObject);
     }
 
 
-    void OnDrawGizmosSelected(){
+    void OnDrawGizmosSelected()
+    {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(this.transform.position, explosionRange);
     }
