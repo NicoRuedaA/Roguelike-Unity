@@ -20,22 +20,54 @@ public class InputManager : MonoBehaviour
     {
         if (context.started)
         {
-            // 1. Comprobamos cooldown (preguntamos a PlayerAttack)
-            if (!PlayerAttack.instance.IsMeleeReady()) return;
+            Debug.LogWarning("--- InputManager: OnAttackMelee INICIADO ---");
 
-            // 2. Comprobamos estamina
-            if (!PlayerManager.instance.ReduceStamina(1f)) return;
+            // --- COMPROBACIÓN 1: ¿Está listo PlayerAttack? ---
+            if (PlayerAttack.instance == null)
+            {
+                Debug.LogError("¡¡ERROR (InputManager)!! PlayerAttack.instance es NULO.");
+                return;
+            }
+            if (!PlayerAttack.instance.IsMeleeReady())
+            {
+                Debug.LogError("¡BLOQUEADO (InputManager)! Cooldown de PlayerAttack NO LISTO.");
+                return;
+            }
 
-            // 3. Lógica de juego
-            PlayerAttack.instance.AttackingAsMelee();
+            Debug.Log("InputManager: Cooldown de Ataque OK.");
 
-            // 4. Animación
+            // --- COMPROBACIÓN 2: ¿Tenemos estamina? ---
+            if (PlayerManager.instance == null)
+            {
+                Debug.LogError("¡¡ERROR (InputManager)!! PlayerManager.instance es NULO.");
+                return;
+            }
+            if (!PlayerManager.instance.ReduceStamina(0)) // Asumiendo que ReduceStamina() devuelve true/false
+            {
+                Debug.LogError("¡BLOQUEADO (InputManager)! Estamina INSUFICIENTE.");
+                return;
+            }
+
+            Debug.Log("InputManager: Estamina OK.");
+
+            // --- COMPROBACIÓN 3: ¿Podemos llamar a la animación? ---
+            if (PlayerAnimation.instance == null)
+            {
+                Debug.LogError("¡¡ERROR (InputManager)!! PlayerAnimation.instance es NULO. Imposible llamar a changeState.");
+                return;
+            }
+
+            Debug.LogWarning("--- InputManager: ¡Todo OK! LLAMANDO A PlayerAnimation.changeState... ---");
+
+            // La llamada final
             PlayerAnimation.instance.changeState(PlayerAnimation.AnimationState.AttackMelee);
         }
     }
 
     public void OnAttackDistance(InputAction.CallbackContext context)
     {
+        Debug.Log("Attack Distance");
+
         if (context.started)
         {
             // --- INICIO DE APUNTADO ---
@@ -45,7 +77,7 @@ public class InputManager : MonoBehaviour
             if (!PlayerAttack.instance.IsDistanceReady()) return;
 
             // 2. Comprobamos estamina para *empezar* a apuntar
-            if (!PlayerManager.instance.ReduceStamina(1f)) return;
+            if (!PlayerManager.instance.ReduceStamina(0)) return;
 
             // Si tenemos éxito, marcamos el flag y activamos la lógica/animación
             isAimingDistance = true;

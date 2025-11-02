@@ -71,6 +71,10 @@ namespace nicorueda.Player
             }
 
             anim = GetComponent<Animator>();
+            if (anim == null)
+            {
+                Debug.LogError("¡¡ERROR!! El script PlayerAnimation no pudo encontrar el componente 'Animator'.", this.gameObject);
+            }
         }
 
         // --- FIXEDUPDATE (Eliminado) ---
@@ -162,75 +166,61 @@ namespace nicorueda.Player
         /// </summary>
         public void changeState(AnimationState state)
         {
-            // Los estados base ahora se gestionan en Update()
+            // --- PRUEBA 1 ---
+            Debug.Log($"--- changeState LLAMADO con estado: {state} ---");
+
+            // BLOQUEO 1
             if (state == AnimationState.Idle || state == AnimationState.Walking || state == AnimationState.Running)
             {
-                Debug.LogWarning("No llames a changeState para Idle/Walking/Running. Se gestionan automáticamente.");
+                Debug.LogWarning("BLOQUEO 1: Saliendo (es un estado base).");
                 return;
             }
 
-            // Comprobar si una acción ya está en curso
-            if (Time.time < timeToEnd) return;
+            // --- PRUEBA 2 ---
+            Debug.Log($"Pasado BLOQUEO 1. Comprobando timeToEnd. (Time.time = {Time.time} vs timeToEnd = {timeToEnd})");
 
+            // BLOQUEO 2
+            if (Time.time < timeToEnd)
+            {
+                Debug.LogWarning($"¡¡¡BUG ENCONTRADO!!! BLOQUEO 2: Saliendo. (Time.time {Time.time} ES MENOR que timeToEnd {timeToEnd})");
+                return;
+            }
+
+            // --- PRUEBA 3 ---
+            Debug.LogWarning("--- ¡PASADO BLOQUEO 2! ENTRANDO AL SWITCH... ---");
+
+            // El switch
             switch (state)
             {
-                // NOTA: Los casos Idle, Walking, Running se han eliminado.
-
                 case AnimationState.Sprint:
-                    if (Time.time > nextSprint) // Solo comprobamos cooldown
-                    {
-                        // --- Lógica de Sprint (PlayerMovement.instance.Sprint()) 
-                        // --- debe llamarse desde el INPUTMANAGER, antes que esto.
-
-                        m_State = AnimationState.Sprint; // Marcamos el estado
-                        anim.Play("Running"); // ¿Animación de Sprint?
-                        timeToEnd = Time.time + changeStateTime; // Bloqueamos Update()
-                        nextSprint = Time.time + sprintDelay; // Cooldown
-                    }
+                    Debug.Log("Switch: Entrando en Sprint.");
+                    m_State = AnimationState.Sprint;
+                    anim.Play("Running");
+                    timeToEnd = Time.time + changeStateTime;
+                    nextSprint = Time.time + sprintDelay;
                     break;
 
                 case AnimationState.Pointing:
-                    if (Time.time > nextAttackMageTime)
-                    {
-                        // --- Lógica de Pointing (PlayerMovement.instance.Pointing())
-                        // --- y gasto de estamina debe llamarse desde el INPUTMANAGER.
-
-                        m_State = AnimationState.Pointing;
-                        anim.Play("AttackMage"); // Esta es la animación de "apuntar"
-
-                        // NO ponemos 'timeToEnd' aquí, porque 'Pointing'
-                        // se mantiene mientras pulsas (según tu InputManager).
-                        // El InputManager llamará a AttackDistance al soltar.
-                    }
+                    Debug.Log("Switch: Entrando en Pointing.");
+                    m_State = AnimationState.Pointing;
+                    anim.Play("AttackMage");
                     break;
 
                 case AnimationState.AttackMelee:
-                    if (Time.time > nextAttackMeleeTime)
-                    {
-                        // --- Lógica de Ataque (PlayerAttack.instance.AttackingAsMelee())
-                        // --- debe llamarse desde el INPUTMANAGER.
-
-                        m_State = AnimationState.AttackMelee;
-                        anim.Play("AttackMelee");
-                        timeToEnd = Time.time + changeStateTime; // Bloqueamos Update()
-                        nextAttackMeleeTime = Time.time + attackMeleeDay; // Cooldown
-                    }
+                    Debug.Log("Switch: Entrando en AttackMelee.");
+                    m_State = AnimationState.AttackMelee;
+                    anim.Play("AttackMelee");
+                    timeToEnd = Time.time + changeStateTime;
                     break;
 
                 case AnimationState.AttackDistance:
-                    // Esto se llama al soltar el botón de "Pointing"
-
-                    // --- Lógica de Ataque (PlayerAttack.instance.AttackingAsDistance())
-                    // --- debe llamarse desde el INPUTMANAGER.
-
+                    Debug.Log("Switch: Entrando en AttackDistance.");
                     m_State = AnimationState.AttackDistance;
-                    anim.Play("AttackDistance"); // ¿O es la misma que AttackMage?
-                    timeToEnd = Time.time + changeStateTime; // Bloqueamos Update()
-                    nextAttackDistanceTime = Time.time + attDistanceDelay; // Cooldown
+                    anim.Play("AttackDistance");
+                    timeToEnd = Time.time + changeStateTime;
                     break;
             }
         }
-
 
         /// <summary>
         /// Método público para cuando el jugador recibe daño.
