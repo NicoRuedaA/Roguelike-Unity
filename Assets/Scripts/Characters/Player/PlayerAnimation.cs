@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace nicorueda.Player
 {
-    public class PlayerAnimation : PlayerManager
+    public class PlayerAnimation : MonoBehaviour
     {
         // --- INSTANCIA SINGLETON (Corregida) ---
         private static PlayerAnimation _instance;
@@ -24,7 +24,7 @@ namespace nicorueda.Player
             Walking,
             Running,
             AttackMelee,
-            AttackDistance,
+            AttackDistanceNoPoint,
             Hurt,
             Sprint,
             Pointing,
@@ -102,10 +102,10 @@ namespace nicorueda.Player
             }
 
             // 2. Si acabamos de terminar una acción, reseteamos al estado base
-            if (m_State != AnimationState.Idle && m_State != AnimationState.Walking && m_State != AnimationState.Running)
+            /*if (m_State != AnimationState.Idle && m_State != AnimationState.Walking && m_State != AnimationState.Running)
             {
                 m_State = AnimationState.Idle;
-            }
+            }*/
 
             // 3. Leemos el estado del "cerebro" (PlayerMovement)
             bool isMoving = PlayerMovement.instance.IsMoving;
@@ -213,12 +213,19 @@ namespace nicorueda.Player
                     timeToEnd = Time.time + changeStateTime;
                     break;
 
-                case AnimationState.AttackDistance:
+                case AnimationState.AttackDistanceNoPoint:
                     Debug.Log("Switch: Entrando en AttackDistance.");
-                    m_State = AnimationState.AttackDistance;
-                    anim.Play("AttackDistance");
+                    m_State = AnimationState.AttackDistanceNoPoint;
+                    anim.Play("AttackDistanceNoPoint");
                     timeToEnd = Time.time + changeStateTime;
                     break;
+                /*case AnimationState.Pointing:
+                    //FUNCIONALIDAD NO IMPLEMENTADA AUN
+                    /*Debug.Log("Switch: Entrando en AttackDistance.");
+                    m_State = AnimationState.AttackDistanceNoPoint;
+                    anim.Play("AttackDistance");
+                    timeToEnd = Time.time + changeStateTime;
+                    break;*/
             }
         }
 

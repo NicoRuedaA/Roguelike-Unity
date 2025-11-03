@@ -86,22 +86,22 @@ namespace nicorueda.Player
             nextMeleeAttackTime = Time.time + meleeAttackRate;
         }
 
-        public void AttackingAsDistance()
+        public void AttackingAsDistanceNoPointing()
         {
             // El InputManager ya ha comprobado estamina y cooldown
             ataque_escupir.Play();
-            GameObject spell = Instantiate(spellPrefab, spellPoint.position, spellPoint.rotation);
-            Rigidbody2D rb = spell.GetComponent<Rigidbody2D>();
+            //GameObject spell = Instantiate(spellPrefab, spellPoint.position, spellPoint.rotation);
+            //Rigidbody2D rb = spell.GetComponent<Rigidbody2D>();
 
             // Usamos la dirección del Sprite (que está en PlayerMovement)
-            rb.AddForce(new Vector2(bulletMageForce * PlayerMovement.instance.Direction(), 0), ForceMode2D.Impulse);
+            //rb.AddForce(new Vector2(bulletMageForce * PlayerMovement.instance.Direction(), 0), ForceMode2D.Impulse);
 
             // 4. APLICAMOS COOLDOWN
             nextDistanceAttackTime = Time.time + distanceAttackRate;
         }
 
         // 5. TYPO CORREGIDO: "AttackinAsMage" -> "AttackingAsMage"
-        public void AttackingAsMage()
+        public void AttackingPointing()
         {
             // El InputManager ya ha comprobado estamina y cooldown
             Vector2 pointTo = PlayerMovement.instance.ReturnMove(); // Dirección del joystick

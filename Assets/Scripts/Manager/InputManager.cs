@@ -64,43 +64,52 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void OnAttackDistance(InputAction.CallbackContext context)
+public void OnAttackDistanceNoPoint(InputAction.CallbackContext context)
+{
+    Debug.LogWarning("--- InputManager: OnAttackDistanceNoPoint INICIADO ---");
+
+    // Solo reaccionamos al 'started' (al pulsar el botón)
+    if (context.started)
     {
-        Debug.Log("Attack Distance");
-
-        if (context.started)
+        // --- COMPROBACIÓN 1: ¿Cooldown listo? ---
+        if (!PlayerAttack.instance.IsDistanceReady()) 
         {
-            // --- INICIO DE APUNTADO ---
-            isAimingDistance = false; // Reseteamos
+            Debug.LogError("¡BLOQUEADO (InputManager)! Cooldown de Distancia NO LISTO.");
+            return;
+        }
+        Debug.Log("InputManager: Cooldown de Distancia OK.");
 
-            // 1. Comprobamos cooldown
-            if (!PlayerAttack.instance.IsDistanceReady()) return;
+        // --- COMPROBACIÓN 2: ¿Estamina lista? ---
+        // (Usando el coste de 10 que definimos)
+        if (!PlayerManager.instance.ReduceStamina(10)) 
+        {
+            Debug.LogError("¡BLOQUEADO (InputManager)! Estamina INSUFICIENTE para Distancia.");
+            return;
+        }
+        Debug.Log("InputManager: Estamina de Distancia OK.");
 
-            // 2. Comprobamos estamina para *empezar* a apuntar
-            if (!PlayerManager.instance.ReduceStamina(0)) return;
-
-            // Si tenemos éxito, marcamos el flag y activamos la lógica/animación
-            isAimingDistance = true;
-            PlayerMovement.instance.Pointing();
-            PlayerAnimation.instance.changeState(PlayerAnimation.AnimationState.Pointing);
+        // --- COMPROBACIÓN 3: ¿Podemos llamar a la lógica? ---
+        if(PlayerAttack.instance == null)
+        {
+            Debug.LogError("¡¡ERROR (InputManager)!! PlayerAttack.instance es NULO.");
+            return;
         }
 
-        if (context.canceled)
+        // 3. Lógica de juego (¡Sin instanciar proyectil!)
+        PlayerAttack.instance.AttackingAsDistanceNoPointing(); 
+        
+        // --- COMPROBACIÓN 4: ¿Podemos llamar a la animación? ---
+        if(PlayerAnimation.instance == null)
         {
-            // --- SOLTAR Y DISPARAR ---
-
-            // Si no empezamos a apuntar con éxito (sin estamina/en cooldown), no disparamos
-            if (!isAimingDistance) return;
-
-            isAimingDistance = false; // Reseteamos
-
-            // 3. Lógica de juego (El cooldown real se activa en este método)
-            PlayerAttack.instance.AttackingAsDistance();
-
-            // 4. Animación
-            PlayerAnimation.instance.changeState(PlayerAnimation.AnimationState.AttackDistance);
+            Debug.LogError("¡¡ERROR (InputManager)!! PlayerAnimation.instance es NULO.");
+            return;
         }
+        
+        // 4. Animación
+        Debug.LogWarning("--- InputManager: ¡Todo OK! LLAMANDO A PlayerAnimation.changeState(AttackDistanceNoPoint)... ---");
+        PlayerAnimation.instance.changeState(PlayerAnimation.AnimationState.AttackDistanceNoPoint);
     }
+}
 
     public void OnSprint(InputAction.CallbackContext context)
     {
