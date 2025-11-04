@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203565205491022862}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.7281, y: -0.2958, z: 0}
   m_LocalScale: {x: 1.2122861, y: 1.280129, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3113824678178088230}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8302460413522332196
 SpriteRenderer:
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1179219595
-  m_SortingLayer: 2
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 05e109e2a6891ae43bfaeedc0fa623e4, type: 3}
   m_Color: {r: 0.084905684, g: 0.084905684, b: 0.084905684, a: 1}
@@ -95,6 +95,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -124,10 +143,10 @@ GameObject:
   - component: {fileID: 3113824678178088231}
   - component: {fileID: 7647460194565851661}
   - component: {fileID: 7632411012239674959}
-  - component: {fileID: 5989832616990854171}
   - component: {fileID: 1662848572953881696}
   - component: {fileID: 1532065558817702721}
   - component: {fileID: 672421986857084704}
+  - component: {fileID: 5068179525863083505}
   m_Layer: 6
   m_Name: dwarf
   m_TagString: Enemy
@@ -142,6 +161,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3113824678178088228}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -149,7 +169,6 @@ Transform:
   m_Children:
   - {fileID: 1608344617061436238}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3113824678178088229
 SpriteRenderer:
@@ -190,7 +209,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 428530841
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f0b49b8dc296ebb47b23633217d6c990, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,6 +232,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -246,13 +284,19 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
 --- !u!95 &7632411012239674959
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -269,48 +313,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &5989832616990854171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3113824678178088228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c62b04a0ee779ac41a58d8f3f6858921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  INITIAL_HEALTH: 5
-  INITIAL_SPEED: 3
-  INITIAL_RUNSPEED: 4
-  INITIAL_MANA: 150
-  INITIAL_STAMINA: 150
-  skullsToInstantiate: 0
-  skullPrefab: {fileID: 0}
-  hurt_sound: {fileID: 1532065558817702721}
-  death_sound: {fileID: 672421986857084704}
-  attack_sound: {fileID: 1662848572953881696}
-  m_Type: 4
-  offset: 0
-  initialStoppingDistance: 1
-  initialRetreadDistance: 1
-  letGuardDistance: 0
-  projectile:
-  - {fileID: 2487326519614553675, guid: da56e2f16c50a8c4c9e481fb7a86fadc, type: 3}
-  initialTimeShoots: 2
-  initialTimeCharge: 0
-  restTime: 1.5
-  idleTime: 0
-  tpTime: 0
-  maxBullet: 2
-  tackleSpeed: 12
-  apuntar: 0
-  moveSpots: []
-  timeFollowing: 4
-  timeToattack: 2
-  activeDistance: 4
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &1662848572953881696
 AudioSource:
   m_ObjectHideFlags: 0
@@ -599,3 +603,26 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5068179525863083505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113824678178088228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0fc379b8aeb44d4bb047e2fc92a14c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INITIAL_HEALTH: 5
+  INITIAL_SPEED: 3
+  INITIAL_RUNSPEED: 8
+  INITIAL_MANA: 4
+  INITIAL_STAMINA: 150
+  activeDistance: 10
+  offset: 0
+  projectile: []
+  chargeTime: 1
+  tackleSpeed: 10
+  cooldownTime: 2

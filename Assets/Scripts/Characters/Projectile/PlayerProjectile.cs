@@ -24,7 +24,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             if (other.CompareTag("Enemy"))
             {
-                other.GetComponent<EnemyController2>().TakeDamage(1, this.transform.position);
+                //other.GetComponent<EnemyController2>().TakeDamage(1, this.transform.position);
             }
 
             else if (other.CompareTag("EnemyProjectile"))
@@ -38,7 +38,7 @@ public class PlayerProjectile : MonoBehaviour
             }
             else if (other.CompareTag("Sword"))
             {
-                other.GetComponent<Sword>().TakeDamage(1, this.transform.position);
+                //other.GetComponent<Sword>().TakeDamage(1, this.transform.position);
             }
 
             DestroyProjectile();

@@ -6,9 +6,12 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using CharacterController = nicorueda.CharacterBase;
 
-public class Sword : EnemyController
+
+namespace nicorueda // <-- AÑADE ESTA LÍNEA
 {
-    /*
+    public class Sword : EnemyManager
+    {/*
+    
         //es un estado pero hice copiar y pegar del character controller y no hay tiempo jejejeej 
         private enum stateMachine
         {
@@ -247,10 +250,13 @@ public class Sword : EnemyController
             }
         }
 
-    */
+
     protected override void Die()
     {
 
     }
+*/
+    }
 }
 
+    

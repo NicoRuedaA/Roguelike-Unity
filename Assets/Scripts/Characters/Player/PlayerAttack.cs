@@ -143,7 +143,7 @@ namespace nicorueda.Player
                 if (enemies.CompareTag("Enemy"))
                 {
                     Debug.Log("le hiso danyo wwwwwwwwwwwwwy");
-                    enemies.gameObject.GetComponent<EnemyController2>().TakeDamage(1, this.transform.position);
+                    //enemies.gameObject.GetComponent<EnemyController2>().TakeDamage(1, this.transform.position);
                     PlayerManager.instance.RestoreMana(35); // Restauramos maná al golpear
                 }
                 if (enemies.CompareTag("BossBody"))

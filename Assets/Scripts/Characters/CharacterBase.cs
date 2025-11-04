@@ -33,7 +33,7 @@ namespace nicorueda
         public int RunSpeed { get; private set; }
 
         // --- Banderas de Estado (protected para que los hijos las usen) ---
-        protected bool isDead = false;
+        public bool isDead { get; protected set; } = false;
         protected bool isVulnerable = true;
 
         // CAMBIO: Ya no se necesitan las propiedades 'get/set' del final.
