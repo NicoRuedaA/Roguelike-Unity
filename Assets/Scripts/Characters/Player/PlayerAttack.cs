@@ -79,7 +79,7 @@ namespace nicorueda.Player
         public void AttackingAsMelee()
         {
             // El InputManager ya ha comprobado estamina y cooldown
-            ataque_melee.Play();
+            //ataque_melee.Play();
             attackingMele = true; // Activamos el trigger de daño
 
             // 4. APLICAMOS COOLDOWN
@@ -89,7 +89,7 @@ namespace nicorueda.Player
         public void AttackingAsDistanceNoPointing()
         {
             // El InputManager ya ha comprobado estamina y cooldown
-            ataque_escupir.Play();
+            //ataque_escupir.Play();
             //GameObject spell = Instantiate(spellPrefab, spellPoint.position, spellPoint.rotation);
             //Rigidbody2D rb = spell.GetComponent<Rigidbody2D>();
 

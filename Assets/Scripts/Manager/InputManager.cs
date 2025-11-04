@@ -81,7 +81,7 @@ public void OnAttackDistanceNoPoint(InputAction.CallbackContext context)
 
         // --- COMPROBACIÓN 2: ¿Estamina lista? ---
         // (Usando el coste de 10 que definimos)
-        if (!PlayerManager.instance.ReduceStamina(10)) 
+        if (!PlayerManager.instance.ReduceStamina(0)) 
         {
             Debug.LogError("¡BLOQUEADO (InputManager)! Estamina INSUFICIENTE para Distancia.");
             return;
