@@ -11,11 +11,25 @@ public class EnemyAnimation : MonoBehaviour
 {
     private EnemyManager manager;
     private EnemyAI_Base ai;
+
+        private void Awake()
+        {
+            // En Awake, solo obtenemos la referencia a nuestro propio manager
+            manager = GetComponent<EnemyManager>();
+        }
     
-    private void Awake()
+    private void Start()
     {
-        manager = GetComponent<EnemyManager>();
-        ai = manager.AI; // El manager ya lo encontró
+        // En Start, le pedimos al manager sus "partes"
+        // Esto se ejecuta DESPUÉS de que EnemyManager.Awake() haya terminado
+        ai = manager.AI;
+
+        // Añadimos una comprobación de seguridad para evitar futuros errores
+        if (ai == null)
+        {
+            Debug.LogError("EnemyAnimation (" + gameObject.name + ") no pudo encontrar el CEREBRO (AI) desde el EnemyManager. ¿Está el script AI adjunto?", gameObject);
+            this.enabled = false; // Desactivamos este script para evitar spam de errores
+        }
     }
 
     private void Update()

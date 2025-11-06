@@ -5040,6 +5040,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1314955547, guid: 4337a7f9836b0034f9178879509dcd91, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4959985230348079986, guid: 4337a7f9836b0034f9178879509dcd91, type: 3}
       propertyPath: m_Actions
       value: 
@@ -5087,6 +5091,10 @@ PrefabInstance:
     - target: {fileID: 8777602081575174598, guid: 4337a7f9836b0034f9178879509dcd91, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777602081575174650, guid: 4337a7f9836b0034f9178879509dcd91, type: 3}
+      propertyPath: m_BodyType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8777602081575174651, guid: 4337a7f9836b0034f9178879509dcd91, type: 3}
       propertyPath: correr_sound
@@ -19864,6 +19872,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c01cdfa0c7337d54cba5dab1e4da7997, type: 3}
+--- !u!61 &1343963439 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 7247100799709702560, guid: eb9294665b4aa15459111482d732d288, type: 3}
+  m_PrefabInstance: {fileID: 2047625744}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1349756196 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1272106378374909837, guid: c19cf99579270d84291528e78d700e5c, type: 3}
@@ -28085,6 +28098,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 203565205491022862, guid: eb9294665b4aa15459111482d732d288, type: 3}
+      propertyPath: m_Name
+      value: Hitbox
+      objectReference: {fileID: 0}
     - target: {fileID: 3113824678178088228, guid: eb9294665b4aa15459111482d732d288, type: 3}
       propertyPath: m_Name
       value: dwarf
@@ -28128,6 +28145,18 @@ PrefabInstance:
     - target: {fileID: 3113824678178088230, guid: eb9294665b4aa15459111482d732d288, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647460194565851661, guid: eb9294665b4aa15459111482d732d288, type: 3}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647460194565851661, guid: eb9294665b4aa15459111482d732d288, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7647460194565851661, guid: eb9294665b4aa15459111482d732d288, type: 3}
+      propertyPath: m_UseFullKinematicContacts
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5068179525863083505, guid: eb9294665b4aa15459111482d732d288, type: 3}
@@ -28176,13 +28205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5fe5265efa2a234ca618d08a3bc7c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackType: 1
+  attackType: 0
   attackCooldown: 2
   damage: 1
   attackSound: {fileID: 0}
   projectilePrefab: {fileID: 0}
   shootPoint: {fileID: 0}
-  hitBox: {fileID: 0}
+  hitBox: {fileID: 1343963439}
 --- !u!114 &2047625748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28195,6 +28224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9e31898baf1254dafddc511ddcbf34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   stoppingDistance: 1
 --- !u!114 &2047625749
 MonoBehaviour:
@@ -29660,6 +29692,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6789026545224500512, guid: 5cfb626da1bad424cae60b5c96cf74c9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8374487650435884274, guid: 5cfb626da1bad424cae60b5c96cf74c9, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -29712,7 +29748,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3306215037830980622, guid: 5cfb626da1bad424cae60b5c96cf74c9, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3360774516743308818, guid: 5cfb626da1bad424cae60b5c96cf74c9, type: 3}
     m_AddedGameObjects:
