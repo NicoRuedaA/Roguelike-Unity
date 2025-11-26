@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1608344617061436238}
   - component: {fileID: 8302460413522332196}
   - component: {fileID: 7247100799709702560}
-  m_Layer: 6
-  m_Name: GameObject
+  m_Layer: 0
+  m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,8 +146,11 @@ GameObject:
   - component: {fileID: 1662848572953881696}
   - component: {fileID: 1532065558817702721}
   - component: {fileID: 672421986857084704}
-  - component: {fileID: 5068179525863083505}
-  m_Layer: 6
+  - component: {fileID: 6798718827312554787}
+  - component: {fileID: 8788508848534356880}
+  - component: {fileID: 7438280269171397377}
+  - component: {fileID: 9080756669286125639}
+  m_Layer: 0
   m_Name: dwarf
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -275,9 +278,9 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3113824678178088228}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 1
   m_Mass: 0.93475544
   m_LinearDrag: 0
@@ -292,8 +295,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!95 &7632411012239674959
 Animator:
   serializedVersion: 5
@@ -603,7 +606,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5068179525863083505
+--- !u!114 &6798718827312554787
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -612,17 +615,69 @@ MonoBehaviour:
   m_GameObject: {fileID: 3113824678178088228}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0fc379b8aeb44d4bb047e2fc92a14c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 99f2b782965c13d4c8bf69a1e3590f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   INITIAL_HEALTH: 5
-  INITIAL_SPEED: 3
+  INITIAL_SPEED: 2
   INITIAL_RUNSPEED: 8
   INITIAL_MANA: 4
   INITIAL_STAMINA: 150
-  activeDistance: 10
-  offset: 0
-  projectile: []
-  chargeTime: 1
-  tackleSpeed: 10
-  cooldownTime: 2
+  _ai: {fileID: 0}
+  _attack: {fileID: 0}
+  _animation: {fileID: 0}
+  _rb: {fileID: 0}
+  _anim: {fileID: 0}
+  _spriteRend: {fileID: 0}
+  _player: {fileID: 0}
+--- !u!114 &8788508848534356880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113824678178088228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9e31898baf1254dafddc511ddcbf34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activationDistance: 5.59
+  stoppingDistance: 1.76
+  wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleCheckDistance: 2
+  safetyRayDistance: 0.8
+  retreatSpeed: 2
+--- !u!114 &7438280269171397377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113824678178088228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5fe5265efa2a234ca618d08a3bc7c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackType: 0
+  attackCooldown: 2
+  damage: 1
+  attackSound: {fileID: 0}
+  projectilePrefab: {fileID: 0}
+  shootPoint: {fileID: 0}
+  hitBox: {fileID: 7247100799709702560}
+--- !u!114 &9080756669286125639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3113824678178088228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e73c45ea3ad0164e978ae842c8a099f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
