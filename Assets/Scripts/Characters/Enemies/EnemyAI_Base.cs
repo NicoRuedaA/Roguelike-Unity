@@ -1,45 +1,97 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using nicorueda;
 
 namespace nicorueda
 {
-
-    // Plantilla abstracta para TODOS los "Cerebros"
     [RequireComponent(typeof(EnemyManager))]
     public abstract class EnemyAI_Base : MonoBehaviour
     {
-        // Estados que la "Cara" (Animación) puede leer
+        // --- NUEVO: Variable común para todos ---
+        [Header("Sistema de Sueño (Optimización)")]
+        [Tooltip("Distancia a la que el enemigo se despierta.")]
+        [SerializeField] protected float activationDistance = 15f;
+
+        // ... (Variables de suavizado que ya tenías: acceleration, deceleration...) ...
+        [Header("Suavizado de Movimiento")]
+        [SerializeField] private float acceleration = 5f;
+        [SerializeField] private float deceleration = 10f;
+
         public bool IsMoving { get; protected set; }
         public bool IsAttacking { get; protected set; }
 
-        protected EnemyManager manager; // Referencia al "Cuerpo"
+        protected EnemyManager manager;
+
+        // Variables internas de movimiento (del padre)
+        protected Vector2 targetDirection = Vector2.zero;
+        protected float targetSpeed = 0f;
+        private float currentSpeed = 0f;
 
         protected virtual void Awake()
         {
-            // Obtiene la referencia al "Cuerpo" al que pertenece
             manager = GetComponent<EnemyManager>();
         }
 
-        // El FixedUpdate del Manager llamará a esto
         protected virtual void FixedUpdate()
         {
-            if (manager.isDead)
+            if (manager.isDead) return; // (Resumido)
+
+            float distanceToPlayer = Vector2.Distance(transform.position, manager.Player.position);
+
+            // --- DEBUG 1: Ver distancia ---
+            // Debug.Log($"Distancia: {distanceToPlayer} / Activación: {activationDistance}");
+
+            if (distanceToPlayer > activationDistance)
             {
-                IsMoving = false;
+                // --- DEBUG 2: Confirmar que entra en modo dormir ---
+                Debug.LogWarning("Modo DORMIR activado. Forzando parada.");
+
                 IsAttacking = false;
+                IsMoving = false; // <-- Aquí forzamos el false
+
+                targetSpeed = 0f;
+                currentSpeed = 0f;
+                manager.Rb.velocity = Vector2.zero;
+
+                ResetAI();
                 return;
             }
 
-            // Ejecuta la lógica de IA específica del hijo
+            // ------------------------------------
+
+            // Si está despierto, ejecuta la IA del hijo
             HandleAI();
+
+            // Aplica el movimiento físico (aceleración/frenado suave)
+            ApplyMovementPhysics();
         }
 
-        // Forzamos a los hijos (Tackler, Shooter) a implementar esta lógica
-        public abstract void HandleAI();
-        public virtual void OnAttackHit()
+        // Separo esto para poder llamarlo también cuando duerme (para frenar suave)
+        private void ApplyMovementPhysics()
         {
+            float accel = (targetSpeed > currentSpeed) ? acceleration : deceleration;
+            currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, accel * Time.fixedDeltaTime);
 
+            if (currentSpeed > 0.01f)
+            {
+                manager.Rb.MovePosition(manager.Rb.position + targetDirection * currentSpeed * Time.fixedDeltaTime);
+            }
+
+            IsMoving = currentSpeed > 0.1f;
+        }
+
+        public abstract void HandleAI();
+
+        // --- NUEVO MÉTODO VIRTUAL ---
+        // Los hijos pueden (opcionalmente) sobrescribir esto para resetear sus estados internos
+        protected virtual void ResetAI() { }
+
+        public virtual void OnAttackHit() { }
+
+        // Dibujo del área en el editor
+        protected virtual void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(transform.position, activationDistance);
         }
     }
 }
