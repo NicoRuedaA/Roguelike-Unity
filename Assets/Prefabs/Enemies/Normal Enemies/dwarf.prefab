@@ -643,6 +643,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activationDistance: 5.59
+  acceleration: 5
+  deceleration: 10
   stoppingDistance: 1.76
   wallLayerMask:
     serializedVersion: 2
