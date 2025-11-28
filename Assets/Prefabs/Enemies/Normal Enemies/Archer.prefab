@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 679070164227086305}
   - component: {fileID: 4468133923204215885}
   - component: {fileID: 2891794088056717532}
+  - component: {fileID: 2889517786187534038}
   m_Layer: 0
   m_Name: archer
   m_TagString: Enemy
@@ -543,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f90cd849243624ba8a2d7e1544e3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activationDistance: 15
+  activationDistance: 10
   acceleration: 5
   deceleration: 10
   shootingRange: 7.18
@@ -554,6 +555,22 @@ MonoBehaviour:
   obstacleCheckDistance: 1
   safetyRayDistance: 0.5
   retreatSpeed: 2
+--- !u!114 &2889517786187534038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036873808491031722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a33cc62074a85a4399ecc97ddb94081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerDistance: 7
+  retreatSpeed: 1
+  retreatDuration: 0.3
+  cooldown: 0
 --- !u!1 &8655655919840920993
 GameObject:
   m_ObjectHideFlags: 0

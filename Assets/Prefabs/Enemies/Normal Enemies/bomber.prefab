@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 6565035178065261252}
   - component: {fileID: 4993467469716912893}
   - component: {fileID: 1110530337354261902}
-  - component: {fileID: 1820012277913476161}
   m_Layer: 0
   m_Name: bomber
   m_TagString: Enemy
@@ -86,7 +85,7 @@ SpriteRenderer:
   m_SortingLayerID: 428530841
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d24917279c762d94fa95a37032020096, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a003a45a58a8ab642a645bf4dd2a6382, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -530,7 +529,7 @@ MonoBehaviour:
   attackCooldown: 2
   damage: 1
   attackSound: {fileID: 0}
-  projectilePrefab: {fileID: 37525752033336459, guid: bfb978cd57abaf74ab09e7f2d4827a24, type: 3}
+  projectilePrefab: {fileID: 2487326519614553675, guid: da56e2f16c50a8c4c9e481fb7a86fadc, type: 3}
   shootPoint: {fileID: 3380154327623170619}
   hitBox: {fileID: 0}
 --- !u!114 &4993467469716912893
@@ -571,23 +570,7 @@ MonoBehaviour:
   triggerDistance: 2.36
   retreatSpeed: 3
   retreatDuration: 0.1
-  cooldown: 2
---- !u!114 &1820012277913476161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1808652637655641182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a33cc62074a85a4399ecc97ddb94081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggerDistance: 2.31
-  retreatSpeed: 0.1
-  retreatDuration: 0.3
-  cooldown: 3
+  cooldown: 0
 --- !u!1 &6622349760431122722
 GameObject:
   m_ObjectHideFlags: 0
