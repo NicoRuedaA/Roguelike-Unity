@@ -1,19 +1,21 @@
 using UnityEngine;
 using nicorueda;
 
-public class EnemyProjectile : MonoBehaviour
+public abstract class EnemyProjectile : MonoBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private int damage = 1;
-    [SerializeField] private float lifeTime = 5f;
+    [SerializeField] protected float speed = 10f;
+    [SerializeField] protected int damage = 1;
+    [SerializeField] protected float lifeTime = 5f;
+    [SerializeField] protected float actualTime = 5f;
 
-    private void Start()
+    protected virtual void Start()
     {
         // Destruir la flecha después de X segundos para no llenar la memoria
         Destroy(gameObject, lifeTime);
+        this.actualTime = 0f;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         // Mover la flecha hacia la derecha (su propio "frente")
         transform.Translate(Vector2.right * speed * Time.deltaTime);
