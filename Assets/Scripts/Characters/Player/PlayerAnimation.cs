@@ -167,27 +167,26 @@ namespace nicorueda.Player
         public void changeState(AnimationState state)
         {
             // --- PRUEBA 1 ---
-            Debug.Log($"--- changeState LLAMADO con estado: {state} ---");
+
 
             // BLOQUEO 1
             if (state == AnimationState.Idle || state == AnimationState.Walking || state == AnimationState.Running)
             {
-                Debug.LogWarning("BLOQUEO 1: Saliendo (es un estado base).");
+
                 return;
             }
 
             // --- PRUEBA 2 ---
-            Debug.Log($"Pasado BLOQUEO 1. Comprobando timeToEnd. (Time.time = {Time.time} vs timeToEnd = {timeToEnd})");
+
 
             // BLOQUEO 2
             if (Time.time < timeToEnd)
             {
-                Debug.LogWarning($"¡¡¡BUG ENCONTRADO!!! BLOQUEO 2: Saliendo. (Time.time {Time.time} ES MENOR que timeToEnd {timeToEnd})");
+
                 return;
             }
 
-            // --- PRUEBA 3 ---
-            Debug.LogWarning("--- ¡PASADO BLOQUEO 2! ENTRANDO AL SWITCH... ---");
+
 
             // El switch
             switch (state)
@@ -214,18 +213,17 @@ namespace nicorueda.Player
                     break;
 
                 case AnimationState.AttackDistanceNoPoint:
-                    Debug.Log("Switch: Entrando en AttackDistance.");
                     m_State = AnimationState.AttackDistanceNoPoint;
                     anim.Play("AttackDistanceNoPoint");
                     timeToEnd = Time.time + changeStateTime;
                     break;
-                /*case AnimationState.Pointing:
-                    //FUNCIONALIDAD NO IMPLEMENTADA AUN
-                    /*Debug.Log("Switch: Entrando en AttackDistance.");
-                    m_State = AnimationState.AttackDistanceNoPoint;
-                    anim.Play("AttackDistance");
-                    timeToEnd = Time.time + changeStateTime;
-                    break;*/
+                    /*case AnimationState.Pointing:
+                        //FUNCIONALIDAD NO IMPLEMENTADA AUN
+                        /*Debug.Log("Switch: Entrando en AttackDistance.");
+                        m_State = AnimationState.AttackDistanceNoPoint;
+                        anim.Play("AttackDistance");
+                        timeToEnd = Time.time + changeStateTime;
+                        break;*/
             }
         }
 

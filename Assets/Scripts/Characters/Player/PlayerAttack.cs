@@ -38,15 +38,16 @@ namespace nicorueda.Player
 
         [Header("Proyectiles")]
         [SerializeField] float bulletDistanceForce = 10f;
-        [SerializeField] float bulletMageForce = 20f;
+        //donde se instancia la bala
         [SerializeField] Transform rangePoint;
         [SerializeField] GameObject bulletPrefab;
-        [SerializeField] Transform spellPoint;
-        [SerializeField] GameObject spellPrefab;
+
 
         [Header("Audio")]
         [SerializeField] private AudioSource ataque_melee;
         [SerializeField] private AudioSource ataque_escupir;
+
+        private PlayerMovement playerMovement;
 
         // Flag para el ataque melee
         private bool attackingMele;
@@ -67,6 +68,8 @@ namespace nicorueda.Player
             }
 
             attackingMele = false;
+
+            playerMovement = GetComponent<PlayerMovement>();
         }
 
         // --- UPDATE (Eliminado) ---
@@ -88,6 +91,13 @@ namespace nicorueda.Player
 
         public void AttackingAsDistanceNoPointing()
         {
+
+            GameObject bullet = Instantiate(bulletPrefab, rangePoint.position, rangePoint.rotation);
+            bullet.GetComponent<PlayerProjectile>().cambiarDireccion(playerMovement.Direction());
+
+
+            // Opcional: Destruir después de 5 segundos
+            Destroy(bullet, 5f);
             // El InputManager ya ha comprobado estamina y cooldown
             //ataque_escupir.Play();
             //GameObject spell = Instantiate(spellPrefab, spellPoint.position, spellPoint.rotation);
@@ -101,7 +111,7 @@ namespace nicorueda.Player
         }
 
         // 5. TYPO CORREGIDO: "AttackinAsMage" -> "AttackingAsMage"
-        public void AttackingPointing()
+        /*public void AttackingPointing()
         {
             // El InputManager ya ha comprobado estamina y cooldown
             Vector2 pointTo = PlayerMovement.instance.ReturnMove(); // Dirección del joystick
@@ -119,7 +129,7 @@ namespace nicorueda.Player
 
             // 4. APLICAMOS COOLDOWN
             nextMageAttackTime = Time.time + mageAttackRate;
-        }
+        }*/
 
         /// <summary>
         /// Este método es llamado por un EVENTO DE ANIMACIÓN

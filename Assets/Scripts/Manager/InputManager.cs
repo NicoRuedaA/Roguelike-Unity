@@ -64,52 +64,33 @@ public class InputManager : MonoBehaviour
         }
     }
 
-public void OnAttackDistanceNoPoint(InputAction.CallbackContext context)
-{
-    Debug.LogWarning("--- InputManager: OnAttackDistanceNoPoint INICIADO ---");
-
-    // Solo reaccionamos al 'started' (al pulsar el botón)
-    if (context.started)
+    public void OnAttackDistanceNoPoint(InputAction.CallbackContext context)
     {
-        // --- COMPROBACIÓN 1: ¿Cooldown listo? ---
-        if (!PlayerAttack.instance.IsDistanceReady()) 
+        if (context.started)
         {
-            Debug.LogError("¡BLOQUEADO (InputManager)! Cooldown de Distancia NO LISTO.");
-            return;
-        }
-        Debug.Log("InputManager: Cooldown de Distancia OK.");
+            if (!PlayerAttack.instance.IsDistanceReady())
+            {
+                return;
+            };
 
-        // --- COMPROBACIÓN 2: ¿Estamina lista? ---
-        // (Usando el coste de 10 que definimos)
-        if (!PlayerManager.instance.ReduceStamina(0)) 
-        {
-            Debug.LogError("¡BLOQUEADO (InputManager)! Estamina INSUFICIENTE para Distancia.");
-            return;
-        }
-        Debug.Log("InputManager: Estamina de Distancia OK.");
+            if (!PlayerManager.instance.ReduceStamina(0))
+            {
+                return;
+            }
+            if (PlayerAttack.instance == null)
+            {
+                return;
+            }
+            PlayerAttack.instance.AttackingAsDistanceNoPointing();
 
-        // --- COMPROBACIÓN 3: ¿Podemos llamar a la lógica? ---
-        if(PlayerAttack.instance == null)
-        {
-            Debug.LogError("¡¡ERROR (InputManager)!! PlayerAttack.instance es NULO.");
-            return;
-        }
+            if (PlayerAnimation.instance == null)
+            {
+                return;
+            }
 
-        // 3. Lógica de juego (¡Sin instanciar proyectil!)
-        PlayerAttack.instance.AttackingAsDistanceNoPointing(); 
-        
-        // --- COMPROBACIÓN 4: ¿Podemos llamar a la animación? ---
-        if(PlayerAnimation.instance == null)
-        {
-            Debug.LogError("¡¡ERROR (InputManager)!! PlayerAnimation.instance es NULO.");
-            return;
+            PlayerAnimation.instance.changeState(PlayerAnimation.AnimationState.AttackDistanceNoPoint);
         }
-        
-        // 4. Animación
-        Debug.LogWarning("--- InputManager: ¡Todo OK! LLAMANDO A PlayerAnimation.changeState(AttackDistanceNoPoint)... ---");
-        PlayerAnimation.instance.changeState(PlayerAnimation.AnimationState.AttackDistanceNoPoint);
     }
-}
 
     public void OnSprint(InputAction.CallbackContext context)
     {
