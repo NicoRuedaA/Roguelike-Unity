@@ -61,6 +61,7 @@ namespace nicorueda
             RunSpeed = INITIAL_RUNSPEED;
 
             isDead = false;
+            Debug.Log("vida inicial: " + Health);
         }
 
         // --- LÓGICA DE COMBATE ---
@@ -86,6 +87,7 @@ namespace nicorueda
             else
             {
                 // El daño no fue letal, aplicamos knockback
+                ReduceHealth(damageAmount);
                 ApplyKnockback(damageSourcePosition);
             }
         }
@@ -115,6 +117,18 @@ namespace nicorueda
         // --- GESTIÓN DE RECURSOS (CAMBIADOS A FLOAT) ---
 
         // CAMBIO: 'manaToReduce' ahora es un parámetro
+
+        public bool ReduceHealth(int amountToReduce)
+        {
+            Debug.Log("vida pre: " + Health);
+            if (Health >= amountToReduce)
+            {
+                Health -= amountToReduce;
+                Debug.Log("vida post: " + Health);
+                return true;
+            }
+            return false;
+        }
         public bool ReduceMana(float amountToReduce)
         {
             if (Mana >= amountToReduce)

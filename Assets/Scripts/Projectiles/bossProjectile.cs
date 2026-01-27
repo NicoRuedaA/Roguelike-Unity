@@ -2,36 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using nicorueda.Player;
 using UnityEngine;
-
-public class bossProjectile : MonoBehaviour
+namespace nicorueda
 {
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class bossProjectile : MonoBehaviour
     {
 
-
-        if (other.CompareTag("BossBody") || (other.CompareTag("EnemyProjectile"))) { }
-        else
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player"))
+
+
+            if (other.CompareTag("BossBody") || (other.CompareTag("EnemyProjectile"))) { }
+            else
             {
-                MakeDMG();
+                if (other.CompareTag("Player"))
+                {
+                    MakeDMG();
+                }
+                DestroyProjectile();
             }
+
+            //
+        }
+
+        void MakeDMG()
+        {
+            PlayerManager.instance.TakeDamage(1, this.transform.position);
             DestroyProjectile();
         }
 
-        //
-    }
 
-    void MakeDMG()
-    {
-        PlayerManager.instance.TakeDamage(1, this.transform.position);
-        DestroyProjectile();
-    }
-
-
-    void DestroyProjectile()
-    {
-        Destroy(gameObject);
+        void DestroyProjectile()
+        {
+            Destroy(gameObject);
+        }
     }
 }

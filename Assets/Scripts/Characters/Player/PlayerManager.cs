@@ -2,23 +2,12 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace nicorueda.Player
+namespace nicorueda
 {
     public class PlayerManager : nicorueda.CharacterBase
     {
         //SINGLETON DECLARATION
-        private static PlayerManager _instance;
-        public static PlayerManager instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    print("Player Manager is Null!!!");
-                }
-                return _instance;
-            }
-        }
+        public static PlayerManager instance { get; private set; }
 
 
 
@@ -32,10 +21,21 @@ namespace nicorueda.Player
 
         //STATE VARIABLES
         protected static bool walking, running, pointing, idle;
-
-        private void Awake()
+        protected override void Awake()
         {
-            _instance = this;
+            // 1. IMPORTANTE: Esto ejecuta SetStats() de CharacterBase (el 5 de vida)
+            base.Awake();
+
+            // 2. Configuración del Singleton corregida
+            if (instance == null)
+            {
+                instance = this;
+                // Opcional: DontDestroyOnLoad(gameObject); si quieres que persista entre niveles
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
 
@@ -47,20 +47,6 @@ namespace nicorueda.Player
         }
 
 
-        /* public TMP_Text counterText;
- private void FixedUpdate()
- {
-
-counterText.text = "HP: " + health + Environment.NewLine +
-                     "MAX HP :" + MAX_HEALTH + Environment.NewLine +
-                     "STAMINA: " + stamina + Environment.NewLine +
-                     "MAX STAMINA :" + MAX_STAMINA +  Environment.NewLine +
-                     "CARGAS: " + mana + Environment.NewLine +
-                     "MAX CARGAS :" + MAX_MANA + Environment.NewLine +
-                     "SPEED: " + speed + Environment.NewLine +
-                     "INITIAL SPEED :" + INITIAL_SPEED;
-
-        }*/
 
 
 
@@ -69,14 +55,5 @@ counterText.text = "HP: " + health + Environment.NewLine +
             print("murió");
         }
 
-        /*public void GodMode()
-        {
-            health = 9999;
-            INITIAL_HEALTH = 9999;
-            stamina = 9999;
-            INITIAL_STAMINA = 9999;
-            mana = 9999;
-            INITIAL_MANA = 9999;
-        }*/
     }
 }

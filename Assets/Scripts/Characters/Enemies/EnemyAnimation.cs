@@ -44,19 +44,19 @@ namespace nicorueda
             // 2. Ataque
             if (ai.IsAttacking)
             {
-                Debug.Log($"[ANIM] Leído: ATTACKING. Reproduciendo: 'Attack'");
+                //Debug.Log($"[ANIM] Leído: ATTACKING. Reproduciendo: 'Attack'");
                 manager.Anim.Play("Attack");
             }
             // 3. Movimiento
             else if (ai.IsMoving)
             {
-                Debug.Log($"[ANIM] Leído: MOVING. Reproduciendo: 'Walk'");
+                //Debug.Log($"[ANIM] Leído: MOVING. Reproduciendo: 'Walk'");
                 manager.Anim.Play("Walk");
             }
             // 4. Reposo
             else
             {
-                Debug.Log($"[ANIM] Leído: QUIETO. Reproduciendo: 'Idle'");
+                //Debug.Log($"[ANIM] Leído: QUIETO. Reproduciendo: 'Idle'");
                 manager.Anim.Play("Idle");
             }
 

@@ -26,12 +26,17 @@ public abstract class EnemyProjectile : MonoBehaviour
         // Si choca con el Jugador
         if (other.CompareTag("Player"))
         {
-            CharacterBase player = other.GetComponent<CharacterBase>();
-            if (player != null)
-            {
-                player.TakeDamage(damage, transform.position);
-            }
+
             Destroy(gameObject); // La flecha desaparece
+            if (PlayerManager.instance != null)
+            {
+                PlayerManager.instance.TakeDamage(damage, transform.position);
+
+            }
+            else
+            {
+                Debug.LogError("No se encontró PlayerManager");
+            }
         }
         // Si choca con un Muro (Layer "Wall")
         else if (other.gameObject.layer == LayerMask.NameToLayer("Wall"))
