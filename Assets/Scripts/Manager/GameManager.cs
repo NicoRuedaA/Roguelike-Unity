@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +33,13 @@ public class GameManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+    }
+
+    public void RestartGame()
+    {
+        int actualSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(actualSceneIndex);
+        Time.timeScale = 1f;
     }
 
 

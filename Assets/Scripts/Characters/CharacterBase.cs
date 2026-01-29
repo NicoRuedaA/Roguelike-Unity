@@ -1,5 +1,7 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
+
 
 namespace nicorueda
 {
@@ -16,6 +18,7 @@ namespace nicorueda
         [SerializeField] private int INITIAL_RUNSPEED = 8;
         [SerializeField] private int INITIAL_MANA = 4;
         [SerializeField] private int INITIAL_STAMINA = 150;
+        [SerializeField] protected float invulnerabilityTime = 1f;
 
         // --- Propiedades Públicas (La forma correcta) ---
         public int MaxHealth { get; private set; }
@@ -72,23 +75,20 @@ namespace nicorueda
         /// </summary>
         /// <param name="damageAmount">La cantidad de vida a perder.</param>
         /// <param name="damageSourcePosition">La posición de quien hizo el daño (para knockback).</param>
+        /// 
+        /// 
         public virtual void TakeDamage(int damageAmount, Vector3 damageSourcePosition)
         {
+            // Solo comprobamos si está muerto o es invulnerable
             if (isDead || !isVulnerable) return;
 
-            Health -= damageAmount;
-            // hurt_sound.Play();
+            // Llamamos a ReduceHealth. Él se encargará de restar, loguear y chequear muerte.
+            bool tookDamage = ReduceHealth(damageAmount);
 
-            if (Health <= 0)
+            if (tookDamage)
             {
-                Health = 0;
-                Die(); // Llama a la función abstracta
-            }
-            else
-            {
-                // El daño no fue letal, aplicamos knockback
-                ReduceHealth(damageAmount);
                 ApplyKnockback(damageSourcePosition);
+                // Aquí podrías disparar el sonido de daño: hurt_sound.Play();
             }
         }
 
@@ -109,26 +109,41 @@ namespace nicorueda
             // TODO: Un 'AddForce' al Rigidbody sería mucho mejor que teletransportar
         }
 
-        // CAMBIO: 'Die' ahora está vacío porque es abstracto.
-        // Las clases hijas DEBEN implementarlo.
         protected abstract void Die();
 
 
-        // --- GESTIÓN DE RECURSOS (CAMBIADOS A FLOAT) ---
-
-        // CAMBIO: 'manaToReduce' ahora es un parámetro
-
-        public bool ReduceHealth(int amountToReduce)
+        public virtual bool ReduceHealth(int amountToReduce)
         {
-            Debug.Log("vida pre: " + Health);
-            if (Health >= amountToReduce)
+            // 1. Si no es vulnerable o ya está muerto, salimos
+            if (!isVulnerable || Health <= 0) return false;
+
+            Debug.Log("Vida pre: " + Health);
+
+            // 2. Restamos vida (usamos Mathf.Max para no bajar de 0)
+            Health -= amountToReduce;
+            Health = Mathf.Max(Health, 0);
+
+            Debug.Log("Vida post: " + Health);
+
+            // 3. Activamos el delay de invulnerabilidad para todos
+            StartCoroutine(InvulnerabilityCooldown());
+
+            // 4. Si la vida llega a 0, ejecutamos la muerte
+            if (Health <= 0)
             {
-                Health -= amountToReduce;
-                Debug.Log("vida post: " + Health);
-                return true;
+                Die();
             }
-            return false;
+
+            return true; // Indicamos que el daño fue procesado con éxito
         }
+
+        private IEnumerator InvulnerabilityCooldown()
+        {
+            isVulnerable = false;
+            yield return new WaitForSeconds(invulnerabilityTime);
+            isVulnerable = true;
+        }
+
         public bool ReduceMana(float amountToReduce)
         {
             if (Mana >= amountToReduce)

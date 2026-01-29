@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -42,18 +43,40 @@ namespace nicorueda
         private void Start()
         {
 
-
             isVulnerable = true;
         }
 
 
+        public override bool ReduceHealth(int amountToReduce)
+        {
+            bool tookDamage = base.ReduceHealth(amountToReduce);
+
+            // 2. Si el padre nos confirma que se recibió daño (true)...
+            if (tookDamage)
+            {
+                // 3. Solo entonces actualizamos la interfaz visual
+                if (HealthManager.instance != null)
+                {
+                    for (int i = 0; i < amountToReduce; i++)
+                    {
+                        HealthManager.instance.RemoveLife();
+                    }
+                }
+            }
+
+            // Retornamos lo que diga la base
+            return tookDamage;
+        }
 
 
 
         protected override void Die()
         {
             print("murió");
+            GameManager.instance.RestartGame();
         }
+
+
 
     }
 }

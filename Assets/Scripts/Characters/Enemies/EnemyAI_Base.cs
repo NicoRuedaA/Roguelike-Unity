@@ -43,7 +43,7 @@ namespace nicorueda
             if (distanceToPlayer > activationDistance)
             {
                 // --- DEBUG 2: Confirmar que entra en modo dormir ---
-                Debug.LogWarning("Modo DORMIR activado. Forzando parada.");
+
 
                 IsAttacking = false;
                 IsMoving = false; // <-- Aquí forzamos el false

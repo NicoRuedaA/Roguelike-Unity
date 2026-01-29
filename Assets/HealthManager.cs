@@ -9,6 +9,10 @@ namespace nicorueda
 
     public class HealthManager : MonoBehaviour
     {
+        // --- NUEVO: Singleton ---
+        public static HealthManager instance;
+
+
         [Header("Configuración")]
         public GameObject heartPrefab;
         public Transform heartContainer;
@@ -19,6 +23,17 @@ namespace nicorueda
 
         private List<GameObject> hearts = new List<GameObject>();
 
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
@@ -74,6 +89,7 @@ namespace nicorueda
 
         public void RemoveLife()
         {
+
             if (hearts.Count > 0)
             {
                 GameObject lastHeart = hearts[hearts.Count - 1];
