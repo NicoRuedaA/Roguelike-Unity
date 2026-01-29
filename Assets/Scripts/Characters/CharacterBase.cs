@@ -109,7 +109,10 @@ namespace nicorueda
             // TODO: Un 'AddForce' al Rigidbody sería mucho mejor que teletransportar
         }
 
-        protected abstract void Die();
+        protected virtual void Die()
+        {
+            Destroy(gameObject);
+        }
 
 
         public virtual bool ReduceHealth(int amountToReduce)

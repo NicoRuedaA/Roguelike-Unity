@@ -68,6 +68,7 @@ namespace nicorueda
 
                 // La llamada final
                 PlayerAnimation.instance.changeState(PlayerAnimation.AnimationState.AttackMelee);
+                PlayerAttack.instance.AttackingAsMelee();
             }
         }
 
