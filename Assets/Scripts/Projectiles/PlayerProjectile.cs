@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace nicorueda.Player
@@ -14,6 +15,8 @@ namespace nicorueda.Player
         private float velocidad = 10f;
         private Vector3 direccion = Vector3.left;
         [SerializeField] private bool residuo = false;
+        [SerializeField] private int damage = 1;
+
 
         private void Start()
         {
@@ -57,7 +60,9 @@ namespace nicorueda.Player
             {
                 if (other.CompareTag("Enemy"))
                 {
-                    //other.GetComponent<EnemyController2>().TakeDamage(1, this.transform.position);
+
+                    EnemyManager enemy = other.GetComponent<EnemyManager>();
+                    enemy.TakeDamage(damage, transform.position);
                 }
 
                 else if (other.CompareTag("EnemyProjectile"))
@@ -65,32 +70,29 @@ namespace nicorueda.Player
                     Destroy(other.gameObject);
                 }
 
-                else if (other.CompareTag("BossBody"))
+                else if (other.CompareTag("Boss"))
                 {
                     other.GetComponent<Body>().ReduceHealth();
                 }
-                else if (other.CompareTag("Sword"))
+                /*else if (other.CompareTag("Sword"))
                 {
                     //other.GetComponent<Sword>().TakeDamage(1, this.transform.position);
-                }
+                }*/
 
                 DestroyProjectile();
-                Instantiate(carga_prefab, transform.position, Quaternion.identity);
+                //Instantiate(carga_prefab, transform.position, Quaternion.identity);
             }
 
 
         }
 
+        public void setDamage(int x)
+        {
+            this.damage = x;
+        }
+
 
     }
 }
-
-/*
-
-
-
-    else if(other.CompareTag("Wall")){
-DestroyProjectile();
-}*/
 
 

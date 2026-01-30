@@ -117,10 +117,11 @@ namespace nicorueda
 
         public virtual bool ReduceHealth(int amountToReduce)
         {
+
             // 1. Si no es vulnerable o ya está muerto, salimos
             if (!isVulnerable || Health <= 0) return false;
 
-            Debug.Log("Vida pre: " + Health);
+            Debug.Log(gameObject.name + "Vida pre: " + Health);
 
             // 2. Restamos vida (usamos Mathf.Max para no bajar de 0)
             Health -= amountToReduce;

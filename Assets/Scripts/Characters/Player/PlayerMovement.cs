@@ -1,4 +1,7 @@
 using UnityEngine;
+using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace nicorueda.Player
 {
@@ -38,8 +41,10 @@ namespace nicorueda.Player
         // Necesitamos velocidades para caminar y correr. 
         // He reemplazado la llamada a 'PlayerManager.instance.Speed' por esto
         // para que la lógica de correr funcione.
-        [SerializeField] private float walkSpeed = 5f;
-        [SerializeField] private float runSpeed = 8f;
+        [SerializeField] private float initialWalkSpeed = 5f;
+        private float walkSpeed = 5f;
+        [SerializeField] private float initialRunSpeed = 8f;
+        private float runSpeed = 8f;
 
 
         // --- VARIABLES ANTIGUAS (Sin Tocar) ---
@@ -48,6 +53,8 @@ namespace nicorueda.Player
         float sprintForce = 5000f;
         float angle;
         [SerializeField] Vector2 lookDir;
+
+        [SerializeField] float noMovementAttackingTime = 0.1f;
 
         /* [SerializeField] private AudioSource caminar_sound;
          [SerializeField] private AudioSource correr_sound;*/
@@ -77,6 +84,8 @@ namespace nicorueda.Player
             // 'running' probablemente es heredado de PlayerManager.
             // Ahora lo controlaremos con m_IsRunningInput.
             running = false;
+            walkSpeed = initialWalkSpeed;
+            runSpeed = initialRunSpeed;
         }
 
         // --- MÉTODOS PÚBLICOS PARA INPUTMANAGER (NUEVO) ---
@@ -164,6 +173,26 @@ namespace nicorueda.Player
         {
             return m_mySpriteRenderer.flipX ? 1 : -1;
         }
+
+        public void startAttack()
+        {
+            walkSpeed = 0;
+            runSpeed = 0;
+            StartCoroutine(finishAttack());
+
+        }
+
+        private IEnumerator finishAttack()
+        {
+
+            yield return new WaitForSeconds(noMovementAttackingTime);
+            walkSpeed = initialWalkSpeed;
+            runSpeed = initialRunSpeed;
+        }
+
+
+
+
 
         void RecoverStamina()
         {

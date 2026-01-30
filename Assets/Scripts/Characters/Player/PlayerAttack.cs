@@ -61,6 +61,7 @@ namespace nicorueda.Player
 
         public void AttackingAsMelee()
         {
+            PlayerMovement.instance.startAttack();
             attackingMele = true;
             enemiesHit.Clear();
             // if(ataque_melee != null) ataque_melee.Play();
@@ -69,8 +70,10 @@ namespace nicorueda.Player
 
         public void AttackingAsDistanceNoPointing()
         {
+            PlayerMovement.instance.startAttack();
             GameObject bullet = Instantiate(bulletPrefab, rangePoint.position, rangePoint.rotation);
-            // bullet.GetComponent<PlayerProjectile>().cambiarDireccion(playerMovement.Direction());
+            bullet.GetComponent<PlayerProjectile>().setDamage(distanceDamage);
+            bullet.GetComponent<PlayerProjectile>().cambiarDireccion(playerMovement.Direction());
             Destroy(bullet, 5f);
             nextDistanceAttackTime = Time.time + distanceAttackRate;
         }
@@ -89,7 +92,7 @@ namespace nicorueda.Player
         {
 
             if (!attackingMele) return;
-            Debug.Log("haciendo daño)");
+
 
             // --- DETECCIÓN DE ENEMIGOS ---
             EnemyManager enemy = collision.GetComponent<EnemyManager>();
@@ -109,7 +112,7 @@ namespace nicorueda.Player
                 }
             }
             // --- DETECCIÓN DE OTROS OBJETOS ---
-            else if (collision.CompareTag("BossBody"))
+            else if (collision.CompareTag("Boss"))
             {
                 collision.GetComponent<Body>().ReduceHealth();
                 if (PlayerManager.instance != null) PlayerManager.instance.RestoreMana(35);
