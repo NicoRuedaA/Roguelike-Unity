@@ -7,11 +7,14 @@ public class SpawnObject : MonoBehaviour
     [SerializeField] GameObject[] objects;
 
 
-    private void Start() {
+    private void Start()
+    {
 
         int rand = Random.Range(0, objects.Length);
-        var myNewSmoke = Instantiate(objects[rand], transform.position, Quaternion.identity);
-        myNewSmoke.transform.parent = gameObject.transform;
+
+        // Cambiamos Quaternion.identity por transform.rotation
+        // Y pasamos el transform (el padre) directamente como tercer argumento
+        var myNewSmoke = Instantiate(objects[rand], transform.position, transform.rotation, transform);
     }
 
 

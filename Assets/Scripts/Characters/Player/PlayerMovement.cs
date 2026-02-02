@@ -53,8 +53,11 @@ namespace nicorueda.Player
         float sprintForce = 5000f;
         float angle;
         [SerializeField] Vector2 lookDir;
+        [SerializeField] float noMovementAttackingTime = 0f;
 
-        [SerializeField] float noMovementAttackingTime = 0.1f;
+        private bool moveOnXAxis = true; // "Memoria": ¿Nos estábamos moviendo en X?
+        private Vector2 lastInput = Vector2.zero; // Para detectar cambios repentinos
+
 
         /* [SerializeField] private AudioSource caminar_sound;
          [SerializeField] private AudioSource correr_sound;*/
@@ -106,14 +109,6 @@ namespace nicorueda.Player
             m_IsRunningInput = isHoldingRun;
         }
 
-        // --- MÉTODO ANTIGUO (Reemplazado) ---
-        // 'MoveLogicMethod' ya no es necesario, usamos 'SetMoveInput'
-        /*
-        public void MoveLogicMethod(Vector2 moveGet)
-        {
-            movement = moveGet;
-        }
-        */
 
         public Vector2 ReturnMove()
         {
@@ -125,46 +120,75 @@ namespace nicorueda.Player
         // --- FIXEDUPDATE (Lógica Principal Modificada) ---
         private void FixedUpdate()
         {
-            // 'pointing' debe ser una variable 'bool' heredada de PlayerManager
-            if (pointing)
+            m_lr.enabled = false;
+
+            // Deadzone para evitar ruido del joystick
+            float deadzone = 0.1f;
+            bool hasInputX = Mathf.Abs(m_MoveInput.x) > deadzone;
+            bool hasInputY = Mathf.Abs(m_MoveInput.y) > deadzone;
+
+            // Calcular estado
+            IsMoving = hasInputX || hasInputY;
+            IsRunning = IsMoving && m_IsRunningInput;
+            float currentSpeed = IsRunning ? runSpeed : walkSpeed;
+
+            // --- LÓGICA DE ÚLTIMO EJE PULSADO (PRIORIDAD) ---
+
+            // 1. Detectamos si se ACABA de pulsar una tecla
+            bool justPressedX = hasInputX && Mathf.Abs(lastInput.x) <= deadzone;
+            bool justPressedY = hasInputY && Mathf.Abs(lastInput.y) <= deadzone;
+
+            // 2. Si se acaba de pulsar una, esa gana el control inmediatamente
+            if (justPressedX)
             {
-                // --- LÓGICA DE APUNTAR ---
-                m_lr.enabled = true;
-                m_lr.SetPosition(0, transform.position);
-                // Usamos m_MoveInput (el input del joystick) para la dirección
-                m_lr.SetPosition(1, new Vector3(transform.position.x + m_MoveInput.x * 7, transform.position.y + m_MoveInput.y * 7, 0));
-
-                // Mientras apunta, el jugador no se mueve
-                rb.velocity = Vector2.zero; // Detenemos el deslizamiento
-                IsMoving = false;
-                IsRunning = false;
+                moveOnXAxis = true;
             }
-            else
+            else if (justPressedY)
             {
-                // --- LÓGICA DE MOVERSE ---
-                m_lr.enabled = false;
-
-                // 1. Calcular el estado actual (para el animador)
-                IsMoving = m_MoveInput.magnitude > 0.1f; // Deadzone pequeño
-                IsRunning = IsMoving && m_IsRunningInput; // Solo corre si se mueve Y pulsa "Run"
-
-                // 2. Determinar la velocidad
-                float currentSpeed = IsRunning ? runSpeed : walkSpeed;
-
-                // 3. Aplicar movimiento
-                // Usamos m_MoveInput y currentSpeed en lugar de 'movement' y 'PlayerManager.instance.Speed'
-                rb.MovePosition(rb.position + m_MoveInput * (currentSpeed * Time.fixedDeltaTime));
-
-                // Lógica de apuntado (parece ser con ratón, aunque el input es de joystick)
-                // Dejo esta parte como estaba, pero 'mousePos' no se actualiza aquí.
-                lookDir = mousePos - rb.position;
-                angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
-
-                // 4. Flipear Sprite
-                // Añadido un deadzone para que no flipee si el joystick está casi centrado
-                if (m_MoveInput.x > 0.1f) m_mySpriteRenderer.flipX = true;
-                else if (m_MoveInput.x < -0.1f) m_mySpriteRenderer.flipX = false;
+                moveOnXAxis = false;
             }
+
+            // 3. Si soltamos la tecla que tenía el control, se lo pasamos a la otra
+            if (moveOnXAxis && !hasInputX && hasInputY)
+            {
+                moveOnXAxis = false;
+            }
+            else if (!moveOnXAxis && !hasInputY && hasInputX)
+            {
+                moveOnXAxis = true;
+            }
+
+            // 4. Construimos el vector final
+            Vector2 cardinalMove = Vector2.zero;
+
+            if (IsMoving)
+            {
+                if (moveOnXAxis && hasInputX)
+                {
+                    cardinalMove.x = m_MoveInput.x;
+                    cardinalMove.y = 0;
+                }
+                else if (hasInputY)
+                {
+                    cardinalMove.x = 0;
+                    cardinalMove.y = m_MoveInput.y;
+                }
+                else if (hasInputX)
+                {
+                    cardinalMove.x = m_MoveInput.x;
+                    cardinalMove.y = 0;
+                }
+            }
+
+            // Guardamos el input para el siguiente frame
+            lastInput = m_MoveInput;
+
+            // 5. Aplicamos movimiento físico
+            rb.MovePosition(rb.position + cardinalMove * (currentSpeed * Time.fixedDeltaTime));
+
+            // 6. Flipear Sprite (según la dirección real en la que nos movemos)
+            if (cardinalMove.x > 0.1f) m_mySpriteRenderer.flipX = true;
+            else if (cardinalMove.x < -0.1f) m_mySpriteRenderer.flipX = false;
         }
 
         // --- FUNCIONES RESTANTES (Sin Tocar) ---
@@ -189,9 +213,6 @@ namespace nicorueda.Player
             walkSpeed = initialWalkSpeed;
             runSpeed = initialRunSpeed;
         }
-
-
-
 
 
         void RecoverStamina()

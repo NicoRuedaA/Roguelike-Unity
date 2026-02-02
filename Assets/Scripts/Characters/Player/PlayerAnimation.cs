@@ -57,8 +57,17 @@ namespace nicorueda.Player
 
 
         // --- AWAKE (Corregido) ---
+
+        private PlayerMovement playerMovement;
         private void Awake()
         {
+
+            playerMovement = GetComponent<PlayerMovement>();
+
+            if (playerMovement == null)
+            {
+                Debug.LogError("¡Falta el script PlayerMovement en el mismo objeto que PlayerAnimation!");
+            }
             // Lógica de Singleton robusta
             if (_instance != null && _instance != this)
             {
@@ -92,42 +101,39 @@ namespace nicorueda.Player
         /// Gestiona automáticamente las animaciones base (Idle, Walk, Run)
         /// leyendo el estado de PlayerMovement.
         /// </summary>
+
+        // --- UPDATE (¡NUEVO!) ---
         private void Update()
         {
-            // 1. Si una "acción" (ataque, hurt) se está reproduciendo,
-            // no hacemos nada. El timer 'timeToEnd' nos bloquea.
+            // --- FRENO DE SEGURIDAD ---
+            // Si el movimiento no se encontró en el Awake, salimos para no dar error.
+            if (playerMovement == null)
+            {
+                return;
+            }
+
+            // 1. Si una "acción" (ataque, hurt) se está reproduciendo...
+
             if (Time.time < timeToEnd)
             {
                 return;
             }
 
-            // 2. Si acabamos de terminar una acción, reseteamos al estado base
-            /*if (m_State != AnimationState.Idle && m_State != AnimationState.Walking && m_State != AnimationState.Running)
-            {
-                m_State = AnimationState.Idle;
-            }*/
 
-            // 3. Leemos el estado del "cerebro" (PlayerMovement)
-            bool isMoving = PlayerMovement.instance.IsMoving;
-            bool isRunning = PlayerMovement.instance.IsRunning;
+            // 2. Leemos el estado del "cerebro"
+            // AHORA ES SEGURO: Ya comprobamos arriba que playerMovement existe
+            bool isMoving = playerMovement.IsMoving;
+            bool isRunning = playerMovement.IsRunning;
 
-            // 4. Decidimos el nuevo estado base
+            // ... (El resto de tu lógica sigue igual) ...
+
             AnimationState newState = m_State;
 
-            if (isRunning)
-            {
-                newState = AnimationState.Running;
-            }
-            else if (isMoving)
-            {
-                newState = AnimationState.Walking;
-            }
-            else
-            {
-                newState = AnimationState.Idle;
-            }
+            if (isRunning) newState = AnimationState.Running;
+            else if (isMoving) newState = AnimationState.Walking;
+            else newState = AnimationState.Idle;
 
-            // 5. Si el estado ha cambiado, lo aplicamos
+
             if (m_State != newState)
             {
                 SetBaseState(newState);

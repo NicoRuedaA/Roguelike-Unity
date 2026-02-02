@@ -12,7 +12,10 @@ namespace nicorueda.Player
         public GameObject carga_prefab;
 
         public float TimeToLive = 5f;
-        private float velocidad = 10f;
+
+
+        [SerializeField] private float velocidad = 13f;
+
         private Vector3 direccion = Vector3.left;
         [SerializeField] private bool residuo = false;
         [SerializeField] private int damage = 1;

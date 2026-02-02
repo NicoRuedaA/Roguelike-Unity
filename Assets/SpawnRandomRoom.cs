@@ -11,9 +11,7 @@ namespace nicorueda
 		private void Start()
 		{
 
-			//Instantiate(prefab, Vector3.zero, Quaternion.identity);
-
-			Instantiate(prefab, transform.position, Quaternion.identity, transform);
+			Instantiate(prefab, transform.position, transform.rotation, transform);
 		}
 
 	}
