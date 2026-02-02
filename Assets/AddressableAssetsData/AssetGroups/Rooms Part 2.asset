@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Rooms Part 2
+  m_EditorClassIdentifier: 
+  m_GroupName: Rooms Part 2
+  m_Data:
+    m_SerializedData: []
+  m_GUID: dd9e12addb0ca5648a01a2b634fd849e
+  m_SerializeEntries:
+  - m_GUID: 34432d3a2a61611408fd709c53f1aa4a
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/00/00.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a555ea92dc340554abc8639072f8572f
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/00/00 marc.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 75465d1a35aa29b43927ec5712d6e523
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/00/00 Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6641a8acfc1fc7d4f9aa7a778bf4307d
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/01/01 marc.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a3ff1437bd8b8b44aa5b4d9dc18e7320
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/01/01 Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd50f2744037bdf4481a44d631b12b50
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/01/01.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7144b45a85551dd43b98543bc594e024
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/10/10.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0068198627825641810e3ff46983046
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/10/10 Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0b00951e3e641444492c2b48d4d00b52
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/10/10 marc.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b5dca55f779f71047942dff5824b303c
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/11/11 marc.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9021fb95c56a1d140b4f788a6d46c7b0
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/11/11 Variant.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22d7c7cae1015df4486c37eb22189d9c
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/11/11.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb99323c491565545986043343a1b414
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/00
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 10e751d730dfcac49ae950e71dec6502
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/01
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f0f01b5577e19c145af75a6c84af5725
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 016c6de8a4fcd514eaab1e43757dc17d
+    m_Address: Assets/Prefabs/Dungeon/Rooms/EntireRooms/2/11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - levels
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 72ba7ec6db7b8f645b897523e2159e54, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 475ae60148c36a64e8a3b0338f01ae3a, type: 2}
+    - {fileID: 11400000, guid: 60a6d3ca58bb0844a9ce3011b4127b23, type: 2}
