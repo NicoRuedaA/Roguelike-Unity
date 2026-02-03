@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class BridgeManager : MonoBehaviour
 {
-    //[SerializeField] string bridgePosition;
-
     [SerializeField] int openingDirection = 1;
-    [SerializeField] GameObject[] templates;
+    [SerializeField] GameObject[] bridges;
+
     bool spawned = false;
     [SerializeField] bool left = false;
     [SerializeField] bool right = false;
-
-
-    //Vector3 wallPosition;
     bool actived = false;
-    //int size;
-
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -33,15 +27,18 @@ public class BridgeManager : MonoBehaviour
         {
             if (left)
             {
-                Instantiate(templates[openingDirection - 1], transform.position, Quaternion.Euler(0, 0, -90));
+
+                Instantiate(bridges[1], transform.position, Quaternion.identity);
             }
             else if (right)
             {
-                Instantiate(templates[openingDirection - 1], transform.position, Quaternion.Euler(0, 0, 90));
+
+                Instantiate(bridges[2], transform.position, Quaternion.identity);
             }
             else
             {
-                Instantiate(templates[openingDirection - 1], transform.position, Quaternion.identity);
+
+                Instantiate(bridges[0], transform.position, Quaternion.identity);
             }
 
         }

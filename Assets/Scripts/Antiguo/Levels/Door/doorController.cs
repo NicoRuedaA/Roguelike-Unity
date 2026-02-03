@@ -6,7 +6,7 @@ public class doorController : MonoBehaviour
 {
 
 
-    private bool opened;
+    private bool opened;/*
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +24,6 @@ public class doorController : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(true);
-    }
+    }*/
 
 }

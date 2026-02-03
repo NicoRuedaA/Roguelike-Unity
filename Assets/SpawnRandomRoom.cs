@@ -6,12 +6,24 @@ namespace nicorueda
 {
 	public class SpawnRandomRoom : MonoBehaviour
 	{
-		[SerializeField] private GameObject prefab;
-
+		[SerializeField] private GameObject[] rooms;
+		[SerializeField] bool left = false;
+		[SerializeField] bool right = false;
 		private void Start()
 		{
-
-			Instantiate(prefab, transform.position, transform.rotation, transform);
+			if (left)
+			{
+				Instantiate(rooms[1], transform.position, Quaternion.identity);
+			}
+			else if (right)
+			{
+				Debug.Log("se instancia derecha");
+				Instantiate(rooms[2], transform.position, Quaternion.identity);
+			}
+			else
+			{
+				Instantiate(rooms[0], transform.position, Quaternion.identity);
+			}
 		}
 
 	}

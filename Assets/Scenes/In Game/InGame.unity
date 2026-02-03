@@ -5327,6 +5327,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7467758204922310213, guid: 4f034b5f83f8d2c4089f8aa238d1c47b, type: 3}
+      propertyPath: templates.Array.data[1]
+      value: 
+      objectReference: {fileID: 5115891618375749913, guid: e87f68aa90056ef48a45da0a66ab7457, type: 3}
+    - target: {fileID: 7467758204922310213, guid: 4f034b5f83f8d2c4089f8aa238d1c47b, type: 3}
+      propertyPath: templates.Array.data[2]
+      value: 
+      objectReference: {fileID: 5115891618375749913, guid: c9e05a90721d37d46a554e303b278dea, type: 3}
     - target: {fileID: 8504379974604172798, guid: 4f034b5f83f8d2c4089f8aa238d1c47b, type: 3}
       propertyPath: m_Name
       value: BridgeSpawnPoint

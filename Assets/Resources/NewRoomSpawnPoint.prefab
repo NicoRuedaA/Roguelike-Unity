@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7545139110968793172}
+  - component: {fileID: 5332707347522133495}
   m_Layer: 0
   m_Name: NewRoomSpawnPoint
   m_TagString: Untagged
@@ -31,3 +32,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5332707347522133495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7545139110968793173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8ae684e806fab4bb813931720f1853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rooms:
+  - {fileID: 8740398691500225149, guid: 12604a644508cc142b152fb84381f5ca, type: 3}
+  - {fileID: 2769867331410898646, guid: 9dbd906ccc050404aa549d99d90ff003, type: 3}
+  - {fileID: 8740398691500225149, guid: 2a154f6112963b846ab05e55e5a76e15, type: 3}
+  left: 1
+  right: 0
