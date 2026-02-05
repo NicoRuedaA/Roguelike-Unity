@@ -48,10 +48,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    //IMPLEMENTAR EN OTRO SITIO
-    /*[SerializeField] private AudioSource enemigo_muere;*/
-
-
 
 }
 

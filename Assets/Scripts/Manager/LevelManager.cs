@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using nicorueda;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -90,21 +91,8 @@ public class LevelManager : MonoBehaviour
 
     public void DeleteDoors()
     {
-
-        if (roomsCompleted == 0) doors.RemoveAt(0);
-        else doors.RemoveAt(3);
-
-        roomsCompleted++;
-        Debug.Log(roomsCompleted);
-        CloseDoors();
         doors.Clear();
-        if (roomsCompleted > 1)
-        {
-            OpenBossDoor();
-            Debug.Log(" SE ABRIO LA PUERRRRRRRRRRRRRRRRRRRTA ");
-        }
     }
-
 
 
     //entramos en el room
@@ -112,18 +100,28 @@ public class LevelManager : MonoBehaviour
     {
         foreach (GameObject objet in doors)
         {
-            objet.SetActive(true);
+            var puertaScript = objet.GetComponent<DoorManager>();
+
+            if (puertaScript != null) // Buena práctica: verificar que existe
+            {
+                puertaScript.Close();
+
+            }
         }
     }
 
     //matamos a todos
     public void OpenDoors()
     {
-        foreach (GameObject objet in doors)
+        foreach (GameObject door in doors)
         {
-
-            objet.SetActive(false);
+            var puertaScript = door.GetComponent<DoorManager>();
+            if (puertaScript != null)
+            {
+                puertaScript.Open();
+            }
         }
+
     }
 
     void OpenBossDoor()
