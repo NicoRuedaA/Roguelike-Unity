@@ -104,6 +104,7 @@ public class LevelManager : MonoBehaviour
 
             if (puertaScript != null) // Buena práctica: verificar que existe
             {
+
                 puertaScript.Close();
 
             }

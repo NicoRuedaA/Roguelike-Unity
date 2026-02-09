@@ -7,6 +7,8 @@ namespace nicorueda
     public class DoorManager : MonoBehaviour
     {
 
+        private bool closed;
+        private bool selected;
         private BoxCollider2D miCollider;
         private SpriteRenderer miRenderer;
 
@@ -25,17 +27,31 @@ namespace nicorueda
 
         public void Close()
         {
-            if (miRenderer != null) miRenderer.enabled = true;
-            if (miCollider != null) miCollider.enabled = true;
-            Debug.Log("La puerta se ha activado: Ahora es sólida y visible.");
+            if (!selected)
+            {
+                Debug.Log("Se cierra la puerta");
+                if (miRenderer != null) miRenderer.enabled = true;
+                if (miCollider != null) miCollider.enabled = true;
+
+            }
+
         }
 
         // Función para que el muro "No exista" (Invisible y se traspasa)
         public void Open()
         {
+
+
             if (miRenderer != null) miRenderer.enabled = false;
             if (miCollider != null) miCollider.enabled = false;
-            Debug.Log("La puerta se ha desactivado: No se ve y se traspasa.");
+
+
+        }
+
+        public void Select()
+        {
+            this.selected = true;
+
         }
 
 

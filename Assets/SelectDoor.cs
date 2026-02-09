@@ -11,6 +11,17 @@ namespace nicorueda
 
             if (other.CompareTag("Player"))
             {
+                DoorManager[] scriptsHijos = GetComponentsInChildren<DoorManager>();
+
+                // Recorremos la lista y llamamos al método Select() en cada uno
+                foreach (DoorManager hijo in scriptsHijos)
+                {
+                    hijo.Select();
+
+
+                    this.enabled = false;
+
+                }
 
             }
 
