@@ -12,6 +12,7 @@ public class CloseRoom : MonoBehaviour
         if (other.CompareTag("Player"))
         {
 
+
             LevelManager.instance.CloseDoors();
         }
     }

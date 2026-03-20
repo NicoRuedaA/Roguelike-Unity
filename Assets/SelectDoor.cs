@@ -6,26 +6,20 @@ namespace nicorueda
 {
     public class SelectDoor : MonoBehaviour
     {
-        private void OnTriggerEnter2D(Collider2D other)
-        {
 
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
             if (other.CompareTag("Player"))
             {
                 DoorManager[] scriptsHijos = GetComponentsInChildren<DoorManager>();
-
-                // Recorremos la lista y llamamos al método Select() en cada uno
                 foreach (DoorManager hijo in scriptsHijos)
                 {
+                    //al pasar por una puerta, se cierra
                     hijo.Select();
-
-
-                    this.enabled = false;
-
+                    //GameManager.instance.SelectDoors();
                 }
-
             }
-
-
         }
     }
 }

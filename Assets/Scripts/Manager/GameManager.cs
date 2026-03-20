@@ -48,6 +48,24 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private int selected=0;
+    public void SelectDoors(){
+        selected++;
+        if(selected>=2) {
+            disableDoors();
+            selected=0;
+        }
+        
+        LevelManager.instance.CloseDoors();
+    }
+
+
+    private void disableDoors(){
+        Debug.Log("disabledoors no implementada");
+        //if no seleccionada
+        //desactivar
+    }
+
 
 }
 
